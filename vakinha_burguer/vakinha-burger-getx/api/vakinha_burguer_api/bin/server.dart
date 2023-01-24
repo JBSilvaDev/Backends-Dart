@@ -16,7 +16,6 @@ void main(List<String> args) async {
 
   load();
 
-  GerencianetRestClient().auth().post('/');
 
   // Configure a pipeline that logs requests.
   final handler = Pipeline().addMiddleware(logRequests()).addHandler(_router);

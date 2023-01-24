@@ -22,7 +22,7 @@ class GerencianetAuthInterceptor extends Interceptor {
     final client = GerencianetRestClient();
 
     final headers = {
-      'authorization': 'Basic ${_getAuthorization}',
+      'authorization': 'Basic ${_getAuthorization()}',
       'content-type': 'application/json',
     };
     final result = await client.post('/oauth/token',
@@ -41,6 +41,7 @@ class GerencianetAuthInterceptor extends Interceptor {
         '';
 
     final authBytes = utf8.encode('$clientId:$clientSecret');
+
     return base64Encode(authBytes);
   }
 }
