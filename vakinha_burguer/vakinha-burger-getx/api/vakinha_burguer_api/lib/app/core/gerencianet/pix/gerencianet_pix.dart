@@ -48,7 +48,7 @@ class GerencianetPix {
       await gerencianetPix.auth().get('/v2/loc/$locationId/qrcode');
   final qrCodeResponseData = qrResponse.data;
   return QrCodeGerencianetModel(
-      image: qrCodeResponseData['imagemQrCode'],
+      image: qrCodeResponseData['imagemQrcode'],
       code: qrCodeResponseData['qrcode']);
 } on DioError catch (e, s) {
       log('Erro no QrCode', error: e.response, stackTrace: s);
