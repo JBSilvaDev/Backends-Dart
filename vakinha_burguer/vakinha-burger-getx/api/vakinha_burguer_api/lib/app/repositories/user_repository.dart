@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:mysql1/mysql1.dart';
 import 'package:vakinha_burguer_api/app/core/database/database.dart';
@@ -58,6 +59,27 @@ class UserRepository {
     } on MySqlException catch (e, s) {
       print(e);
       print(s);
+      throw Exception();
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  Future<User> findByID(int id) async {
+    MySqlConnection? conn;
+    try {
+      conn = await Database().openConnection();
+      final result =
+          await conn.query(''' select * from usuario where id =?''', [id]);
+      final mysqlData = result.first;
+      return User(
+        id: mysqlData["id"],
+        name: mysqlData['nome'],
+        email: mysqlData['email'],
+        password: '',
+      );
+    } on MySqlException catch (e, s) {
+      log('Erro ao buscar usuario', error: e, stackTrace: s);
       throw Exception();
     } finally {
       await conn?.close();

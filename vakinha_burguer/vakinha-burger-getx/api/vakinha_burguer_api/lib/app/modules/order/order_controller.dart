@@ -14,7 +14,9 @@ class OrderController {
   Future<Response> register(Request request) async {
     final orderVM = OrderViewModel.fromJson(await request.readAsString());
     final order = await _orderService.createOrder(orderVM);
-    return Response.ok(jsonEncode({'Menssagem': 'Criado com sucesso!'}));
+    return Response.ok(order.toJson(), headers: {
+      'content-type':'application/json'
+      });
   }
 
   Router get router => _$OrderControllerRouter(this);
