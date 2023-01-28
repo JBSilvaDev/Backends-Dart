@@ -34,4 +34,10 @@ class OrderService {
 
     return _gerencianetPix.getQrCode(billing.locationId);
   }
+
+  Future<void> confirmePayment(Iterable<String> transactions) async {
+    for (final transaction in transactions) {
+      _orderRepository.confirmPaymentByTransactionId(transaction);
+    }
+  }
 }

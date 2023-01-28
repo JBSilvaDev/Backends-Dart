@@ -8,6 +8,7 @@ import 'package:shelf_static/shelf_static.dart';
 import 'package:vakinha_burguer_api/app/modules/auth/auth_controller.dart';
 import 'package:vakinha_burguer_api/app/modules/order/order_controller.dart';
 import 'package:vakinha_burguer_api/app/modules/product/product_controller.dart';
+import 'package:vakinha_burguer_api/app/modules/webhooks/gerencianet_webhook_controller.dart';
 
 final staticFiles = createStaticHandler('images/', listDirectories: true);
 // Configure routes.
@@ -15,6 +16,7 @@ final _router = Router()
   ..mount('/images/', staticFiles)
   ..mount('/auth/', AuthController().router)
   ..mount('/products/', ProductController().router)
+  ..mount('/gerencianet/webhook/', GerencianetWebhookController().router)
   ..mount('/order/', OrderController().router);
 
 void main(List<String> args) async {

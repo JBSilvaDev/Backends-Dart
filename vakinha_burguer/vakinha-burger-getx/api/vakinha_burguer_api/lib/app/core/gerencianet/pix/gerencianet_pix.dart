@@ -18,7 +18,7 @@ class GerencianetPix {
           "nome": name,
         },
         'valor': {
-          "original": '$value',
+          "original": value.toStringAsFixed(2),
         },
         "chave": env['gerencianetChavePix'],
         'solicitacaoPagador': 'pedido de numero $orderId no vakinha burger',
@@ -43,16 +43,30 @@ class GerencianetPix {
 
   Future<QrCodeGerencianetModel> getQrCode(int locationId) async {
     try {
-  final gerencianetPix = GerencianetRestClient();
-  final qrResponse =
-      await gerencianetPix.auth().get('/v2/loc/$locationId/qrcode');
-  final qrCodeResponseData = qrResponse.data;
-  return QrCodeGerencianetModel(
-      image: qrCodeResponseData['imagemQrcode'],
-      code: qrCodeResponseData['qrcode']);
-} on DioError catch (e, s) {
+      final gerencianetPix = GerencianetRestClient();
+      final qrResponse =
+          await gerencianetPix.auth().get('/v2/loc/$locationId/qrcode');
+      final qrCodeResponseData = qrResponse.data;
+      return QrCodeGerencianetModel(
+          image: qrCodeResponseData['imagemQrcode'],
+          code: qrCodeResponseData['qrcode']);
+    } on DioError catch (e, s) {
       log('Erro no QrCode', error: e.response, stackTrace: s);
       rethrow;
-}
+    }
+  }
+
+  Future<void> registerWebHook() async {
+    final gerencianetRestClient = GerencianetRestClient();
+    await gerencianetRestClient
+        .auth()
+        .put('/v2/webhook/${env['gerencianetChavePix']}', data: {
+          "webhookUrl": env["gerencianetUrlWebHook"],
+          });
   }
 }
+
+
+// {
+//   "webhookUrl":"http://vakinhabgjb.cloudns.ph/gerencianet/webhook"
+// }

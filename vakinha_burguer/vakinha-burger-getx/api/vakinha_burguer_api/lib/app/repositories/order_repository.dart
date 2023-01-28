@@ -46,4 +46,20 @@ insert into pedido_item(quantidade, pedido_id, produto_id) values(?,?,?)
       await conn?.close();
     }
   }
+
+  Future<void> confirmPaymentByTransactionId(String transaction) async {
+    MySqlConnection? conn;
+    try {
+      conn = await Database().openConnection();
+      await conn.query(
+          '''update pedido set status_pedido = ? where id_transacao = ?''',
+          ['F', transaction]);
+    } on MySqlException catch (e, s) {
+      print('=' * 50);
+      log('Erro no processamento de pagamento', error: e, stackTrace: s);
+      throw Exception();
+    } finally {
+      await conn?.close();
+    }
+  }
 }
