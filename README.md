@@ -25,3 +25,10 @@ cd /etc/nginx/sites-enabled/
 ```
 tail -f /var/log/nginx/access.log
 ```
+
+# Anotacoes:
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/vakinhabgjb.cloudns.ph/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/vakinhabgjb.cloudns.ph/privkey.pem
+
+/home/ubuntu/certificates/chain-pix-prod.crt
